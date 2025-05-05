@@ -1,0 +1,65 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Buscar Fisioterapeutas por Especialidad{% endblock %}
+
+{% block contenido %}
+
+<h2>Buscar fisioterapeutas por especialidad</h2>
+
+<form action="/physios/find" method="get">
+  <div class="form-group">
+    <select name="specialty" class="form-control" required>
+      <option value="">Selecciona una especialidad</option>
+      <option value="Sports">Sports</option>
+      <option value="Neurological">Neurological</option>
+      <option value="Pediatric">Pediatric</option>
+      <option value="Geriatric">Geriatric</option>
+      <option value="Oncological">Oncological</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+
+{% if error %}
+  <div class="alert alert-danger mt-3">{{ error }}</div>
+{% endif %}
+
+{% if physios %}
+  <h3 class="mt-4">Resultados:</h3>
+  
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Especialidad</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for physio in physios %}
+        <tr>
+          <td>{{ physio.name }}</td>
+          <td>{{ physio.surname }}</td>
+          <td>{{ physio.specialty }}</td>
+          <td>
+            <div class="d-flex align-items-center gap-1">
+            <a class="btn btn-success btn-sm" href="/physios/{{ physio._id }}">Ficha</a>
+            {% if session.usuario.rol == 'admin' %}
+              <form action="/physios/{{ physio._id }}" method="post" class="m-0 p-0">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
+              </form>
+              <a class="btn btn-primary btn-sm" href="/physios/{{ physio._id }}/edit">Editar</a>
+            {% endif %}
+          </div>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="4">No se encontraron fisioterapeutas para esta especialidad.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.njk" %}
+
+{% block titulo %}<h2>Registrar nuevo paciente</h2>{% endblock %}
+
+{% block contenido %}
+<form action="/patients" method="POST" enctype="multipart/form-data" class="mb-5">
+  <div class="row">
+    <div class="col-md-6">
+
+      <!-- Nombre -->
+      <div class="form-group mb-3">
+        <label>Nombre:</label>
+        {% if errores.name %}
+          <div class="text-danger">{{ errores.name }}</div>
+        {% endif %}
+        <input type="text" class="form-control {% if errores.name %}is-invalid{% elif datos.name %}is-valid{% endif %}" name="name" value="{{ datos.name or '' }}" required>
+      </div>
+
+      <!-- Apellido -->
+      <div class="form-group mb-3">
+        <label>Apellido:</label>
+        {% if errores.surname %}
+          <div class="text-danger">{{ errores.surname }}</div>
+        {% endif %}
+        <input type="text" class="form-control {% if errores.surname %}is-invalid{% elif datos.surname %}is-valid{% endif %}" name="surname" value="{{ datos.surname or '' }}" required>
+      </div>
+
+      <!-- Fecha de nacimiento -->
+      <div class="form-group mb-3">
+        <label>Fecha de nacimiento:</label>
+        {% if errores.birthDate %}
+          <div class="text-danger">{{ errores.birthDate }}</div>
+        {% endif %}
+        <input type="date" class="form-control {% if errores.birthDate %}is-invalid{% elif datos.birthDate %}is-valid{% endif %}" name="birthDate" value="{{ datos.birthDate or '' }}" required>
+      </div>
+
+      <!-- Dirección -->
+      <div class="form-group mb-3">
+        <label>Dirección:</label>
+        {% if errores.address %}
+          <div class="text-danger">{{ errores.address }}</div>
+        {% endif %}
+        <input type="text" class="form-control {% if errores.address %}is-invalid{% elif datos.address %}is-valid{% endif %}" name="address" value="{{ datos.address or '' }}">
+      </div>
+
+      <!-- Nº Seguro -->
+      <div class="form-group mb-3">
+        <label>Nº Seguro:</label>
+        {% if errores.insuranceNumber %}
+          <div class="text-danger">{{ errores.insuranceNumber }}</div>
+        {% endif %}
+        <input type="text" class="form-control {% if errores.insuranceNumber %}is-invalid{% elif datos.insuranceNumber %}is-valid{% endif %}" name="insuranceNumber" value="{{ datos.insuranceNumber or '' }}" required>
+      </div>
+
+      <!-- Imagen -->
+      <div class="form-group mb-3">
+        <label>Imagen:</label>
+        <input type="file" class="form-control" name="image" accept="image/*" onchange="previewImage(event)">
+        <img id="preview" src="#" alt="Previsualización" class="img-thumbnail mt-2" style="display:none; max-height:150px;">
+      </div>
+
+    </div>
+
+    <div class="col-md-6">
+      <hr>
+
+      <!-- Login -->
+      <div class="form-group mb-3">
+        <label>Login de usuario:</label>
+        {% if errores.login %}
+          <div class="text-danger">{{ errores.login }}</div>
+        {% endif %}
+        <input type="text" class="form-control {% if errores.login %}is-invalid{% elif datos.login %}is-valid{% endif %}" name="login" value="{{ datos.login or '' }}" required>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group mb-3">
+        <label>Contraseña:</label>
+        {% if errores.password %}
+          <div class="text-danger">{{ errores.password }}</div>
+        {% endif %}
+        <input type="password" class="form-control {% if errores.password %}is-invalid{% elif datos.password %}is-valid{% endif %}" name="password" required>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón enviar -->
+  <button type="submit" class="btn btn-primary mt-3">Registrar paciente</button>
+
+  <!-- Error general -->
+  {% if errores.general %}
+    <div class="alert alert-danger mt-3">{{ errores.general }}</div>
+  {% endif %}
+</form>
+
+<!-- Script previsualización de imagen -->
+<script>
+  function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('preview');
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
+
+{% endblock %}

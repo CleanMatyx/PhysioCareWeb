@@ -1,0 +1,26 @@
+{% extends "base.njk" %}
+
+{% block titulo %}{{ patient.name }} | Ficha{% endblock %}
+
+{% block contenido %}
+
+  <h1>Ficha de {{ patient.name }}</h1>
+
+  <div class="mb-4">
+    <p><strong>Nombre:</strong> {{ patient.name }}</p>
+    <p><strong>Apellidos:</strong> {{ patient.surname }}</p>
+    <p><strong>Fecha de nacimiento:</strong> {{ patient.birthDate | date("dd/MM/yyyy") }}</p>
+    <p><strong>Dirección:</strong> {{ patient.address or 'No especificada' }}</p>
+    <p><strong>Número de Seguro:</strong> {{ patient.insuranceNumber }}</p>
+
+    {% if patient.image %}
+      <div class="mt-3">
+        <strong>Imagen:</strong><br>
+        <img src="{{ patient.image }}" alt="Imagen del paciente" class="img-thumbnail mt-2" style="max-width: 200px;">
+      </div>
+    {% endif %}
+  </div>
+
+  <a class="btn btn-primary" href="/patients/{{ patient._id }}/edit">Editar datos</a>
+
+{% endblock %}

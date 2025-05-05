@@ -1,0 +1,60 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Expediente de {{ record.patient.name }} {{ record.patient.surname }}{% endblock %}
+
+{% block contenido %}
+
+<div class="container mt-4">
+
+  <h2 class="mb-4">Expediente de <strong>{{ record.patient.name }} {{ record.patient.surname }}</strong></h2>
+
+  <div class="mb-4">
+    <p><strong>Fecha de nacimiento:</strong> {{ record.patient.birthDate }}</p>
+    <p><strong>Dirección:</strong> {{ record.patient.address or 'No especificada' }}</p>
+    <p><strong>Número de Seguro:</strong> {{ record.patient.insuranceNumber }}</p>
+    {% if record.patient.image %}
+      <p><strong>Imagen:</strong></p>
+      <img src="{{ record.patient.image }}" alt="Imagen del paciente" class="img-thumbnail" style="max-width: 200px;">
+    {% endif %}
+  </div>
+
+  <hr>
+
+  <div class="mb-3">
+    <h4 class="mb-2">Expediente médico</h4>
+    <p class="border p-3 bg-light rounded">{{ record.medicalRecord }}</p>
+  </div>
+
+  <hr>
+
+  <div class="mb-3">
+    <h4 class="mb-3">Citas médicas</h4>
+
+    {% if record.appointments.length == 0 %}
+      <div class="alert alert-warning">No hay citas registradas para este expediente.</div>
+    {% else %}
+      {% for appointment in record.appointments %}
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              {{ appointment.date }} — 
+              {{ appointment.physio.name }} {{ appointment.physio.surname }}
+            </h5>
+            <p><strong>Diagnóstico:</strong> {{ appointment.diagnosis }}</p>
+            <p><strong>Tratamiento:</strong> {{ appointment.treatment }}</p>
+            {% if appointment.observations %}
+              <p><strong>Observaciones:</strong> {{ appointment.observations }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  {% if session.usuario.rol == 'admin' or session.usuario.rol == 'physio' %}
+    <a class="btn btn-success" href="/records/{{ record._id }}/appointments/new">+ Añadir Cita</a>
+  {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Editar Fisioterapeuta{% endblock %}
+
+{% block contenido %}
+<div class="container mt-4">
+  <h2>Editar fisioterapeuta</h2>
+
+  <form action="/physios/{{ physio._id }}" method="POST" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <label>Nombre:</label>
+          {% if errores.name %}
+            <div class="text-danger">{{ errores.name }}</div>
+          {% endif %}
+          <input type="text" name="name" class="form-control {% if errores.name %}is-invalid{% elif physio.name %}is-valid{% endif %}" value="{{ physio.name }}" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <label>Apellido:</label>
+          {% if errores.surname %}
+            <div class="text-danger">{{ errores.surname }}</div>
+          {% endif %}
+          <input type="text" name="surname" class="form-control {% if errores.surname %}is-invalid{% elif physio.surname %}is-valid{% endif %}" value="{{ physio.surname }}" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <label>Especialidad:</label>
+          {% if errores.specialty %}
+            <div class="text-danger">{{ errores.specialty }}</div>
+          {% endif %}
+          <select name="specialty" class="form-control {% if errores.specialty %}is-invalid{% elif physio.specialty %}is-valid{% endif %}" required>
+            <option value="">Seleccione especialidad</option>
+            <option value="Sports" {% if physio.specialty == 'Sports' %}selected{% endif %}>Deportes</option>
+            <option value="Neurological" {% if physio.specialty == 'Neurological' %}selected{% endif %}>Neurologica</option>
+            <option value="Pediatric" {% if physio.specialty == 'Pediatric' %}selected{% endif %}>Pediátrica</option>
+            <option value="Geriatric" {% if physio.specialty == 'Geriatric' %}selected{% endif %}>Geriátrica</option>
+            <option value="Oncological" {% if physio.specialty == 'Oncological' %}selected{% endif %}>Oncologica</option>
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label>Número de licencia:</label>
+          {% if errores.licenseNumber %}
+            <div class="text-danger">{{ errores.licenseNumber }}</div>
+          {% endif %}
+          <input type="text" name="licenseNumber" class="form-control {% if errores.phone %}is-invalid{% elif physio.licenseNumber %}is-valid{% endif %}" value="{{ physio.licenseNumber }}" required>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <label>Imagen actual:</label><br>
+          {% if physio.image %}
+            <img src="{{ physio.image }}" alt="Imagen actual" style="max-width: 200px; max-height: 200px;">
+          {% else %}
+            <p>No hay imagen disponible</p>
+          {% endif %}
+        </div>
+
+        <div class="form-group mb-3">
+          <label>Subir nueva imagen:</label>
+          <input type="file" name="image" class="form-control {% if errores.image %}is-invalid{% endif %}">
+          {% if errores.image %}
+            <div class="text-danger">{{ errores.image }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+      {% if error %}
+        <div class="alert alert-danger mt-3">{{ error }}</div>
+      {% endif %}
+  </form>
+
+  <script>
+    function previewImage(event) {
+      const input = event.target;
+      const preview = document.getElementById('preview');
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
+
+  {% if error %}
+    <p style="color: red">{{ error }}</p>
+  {% endif %}
+{% endblock %}

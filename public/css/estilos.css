@@ -1,0 +1,19 @@
+.par
+{
+    width: 70%;
+    background-color: #999999;
+    color: white;
+}
+
+.impar
+{
+    width: 70%;
+    background-color: #cccccc;
+    color: black;
+}
+
+/* Mostrar dropdown al pasar el mouse */
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }

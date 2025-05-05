@@ -1,0 +1,76 @@
+{% extends "base.njk" %}
+
+{% block titulo %}<h2>Registrar nuevo fisioterapeuta</h2>{% endblock %}
+
+{% block contenido %}
+<form action="/physios" method="POST" enctype="multipart/form-data" class="mb-5">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group mb-3">
+        <label>Nombre:</label>
+        <input type="text" class="form-control" name="name" value="{{ datos.name or '' }}" required>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Apellido:</label>
+        <input type="text" class="form-control" name="surname" value="{{ datos.surname or '' }}" required>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Especialidad:</label>
+        <select name="specialty" class="form-control" required>
+          <option value="">-- Selecciona una opción --</option>
+          {% for option in ['Sports', 'Neurological', 'Pediatric', 'Geriatric', 'Oncological'] %}
+            <option value="{{ option }}" {% if datos.specialty == option %}selected{% endif %}>{{ option }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Número de licencia:</label>
+        <input type="text" class="form-control" name="licenseNumber" value="{{ datos.licenseNumber or '' }}" required>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Imagen:</label>
+        <input type="file" class="form-control" name="image" accept="image/*" onchange="previewImage(event)">
+        <img id="preview" src="#" alt="Previsualización" class="img-thumbnail mt-2" style="display:none; max-height:150px;">
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <hr>
+      <div class="form-group mb-3">
+        <label>Login de usuario:</label>
+        <input type="text" class="form-control" name="login" value="{{ datos.login or '' }}" required>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Contraseña:</label>
+        <input type="password" class="form-control" name="password" required>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3">Registrar fisioterapeuta</button>
+
+  {% if error %}
+    <div class="alert alert-danger mt-3">{{ error }}</div>
+  {% endif %}
+</form>
+
+<script>
+  function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('preview');
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
+{% endblock %}

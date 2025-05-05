@@ -1,0 +1,85 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Añadir Cita{% endblock %}
+
+{% block contenido %}
+
+<h2>Añadir cita al expediente de {{ patient.name }} {{ patient.surname }}</h2>
+
+<form action="/records/{{ record._id }}/appointments" method="POST">
+  <div class="form-group">
+    <label for="date">Fecha de la cita:</label>
+    <input 
+      type="date" 
+      name="date" 
+      class="form-control {% if errores.date %}is-invalid{% elif datos.date %}is-valid{% endif %}" 
+      value="{{ datos.date or '' }}"
+      required
+    >
+    {% if errores.date %}
+      <div class="invalid-feedback">{{ errores.date }}</div>
+    {% endif %}
+  </div>
+
+  <div class="form-group">
+    <label for="physio">Fisioterapeuta:</label>
+    <select 
+      name="physio" 
+      class="form-control {% if errores.physio %}is-invalid{% elif datos.physio %}is-valid{% endif %}" 
+      required
+    >
+      <option value="">-- Selecciona un fisio --</option>
+      {% for physio in physios %}
+        <option value="{{ physio._id }}" {% if datos.physio == physio._id %}selected{% endif %}>
+          {{ physio.name }} {{ physio.surname }}
+        </option>
+      {% endfor %}
+    </select>
+    {% if errores.physio %}
+      <div class="invalid-feedback">{{ errores.physio }}</div>
+    {% endif %}
+  </div>
+
+  <div class="form-group">
+    <label for="diagnosis">Diagnóstico:</label>
+    <textarea 
+      name="diagnosis" 
+      class="form-control {% if errores.diagnosis %}is-invalid{% elif datos.diagnosis %}is-valid{% endif %}" 
+      rows="3"
+      required
+    >{{ datos.diagnosis or '' }}</textarea>
+    {% if errores.diagnosis %}
+      <div class="invalid-feedback">{{ errores.diagnosis }}</div>
+    {% endif %}
+  </div>
+
+  <div class="form-group">
+    <label for="treatment">Tratamiento:</label>
+    <textarea 
+      name="treatment" 
+      class="form-control {% if errores.treatment %}is-invalid{% elif datos.treatment %}is-valid{% endif %}" 
+      rows="3"
+      required
+    >{{ datos.treatment or '' }}</textarea>
+    {% if errores.treatment %}
+      <div class="invalid-feedback">{{ errores.treatment }}</div>
+    {% endif %}
+  </div>
+
+  <div class="form-group">
+    <label for="observations">Observaciones (opcional):</label>
+    <textarea 
+      name="observations" 
+      class="form-control {% if datos.observations %}is-valid{% endif %}" 
+      rows="2"
+    >{{ datos.observations or '' }}</textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Añadir cita</button>
+</form>
+
+{% if errores.general %}
+  <div class="alert alert-danger mt-3">{{ errores.general }}</div>
+{% endif %}
+
+{% endblock %}

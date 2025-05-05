@@ -1,0 +1,97 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Editar Paciente{% endblock %}
+
+{% block contenido %}
+  <div class="container mt-4">
+    <h2 class="mb-4">Editar Paciente</h2>
+
+    <form action="/patients/{{ patient._id }}" method="POST" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label>Nombre:</label>
+            {% if errores.name %}
+              <div class="text-danger">{{ errores.name }}</div>
+            {% endif %}
+            <input type="text" name="name" class="form-control {% if errores.name %}is-invalid{% elif patient.name %}is-valid{% endif %}" value="{{ patient.name }}" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label>Apellido:</label>
+            {% if errores.surname %}
+              <div class="text-danger">{{ errores.surname }}</div>
+            {% endif %}
+            <input type="text" name="surname" class="form-control {% if errores.surname %}is-invalid{% elif patient.surname %}is-valid{% endif %}" value="{{ patient.surname }}" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label>Fecha de nacimiento:</label>
+            {% if errores.birthDate %}
+              <div class="text-danger">{{ errores.birthDate }}</div>
+            {% endif %}
+            <input type="date" name="birthDate" class="form-control {% if errores.birthDate %}is-invalid{% elif patient.birthDateFormatted %}is-valid{% endif %}" value="{{ patient.birthDateFormatted }}" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label>Dirección:</label>
+            {% if errores.address %}
+              <div class="text-danger">{{ errores.address }}</div>
+            {% endif %}
+            <input type="text" name="address" class="form-control {% if errores.address %}is-invalid{% elif patient.address %}is-valid{% endif %}" value="{{ patient.address or '' }}">
+          </div>
+
+          <div class="form-group mb-3">
+            <label>Nº Seguro:</label>
+            {% if errores.insuranceNumber %}
+              <div class="text-danger">{{ errores.insuranceNumber }}</div>
+            {% endif %}
+            <input type="text" name="insuranceNumber" class="form-control {% if errores.insuranceNumber %}is-invalid{% elif patient.insuranceNumber %}is-valid{% endif %}" value="{{ patient.insuranceNumber }}" required>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label>Imagen actual:</label><br>
+            {% if patient.image %}
+              <img src="{{ patient.image }}" alt="Imagen del paciente" class="img-thumbnail" style="max-height: 150px;">
+            {% else %}
+              <p>No hay imagen.</p>
+            {% endif %}
+          </div>
+
+          <div class="form-group mb-3">
+            <label>Nueva imagen:</label>
+            <input type="file" name="image" class="form-control" accept="image/*" onchange="previewImage(event)">
+            <img id="preview" class="img-thumbnail mt-2" style="max-height: 150px; display: none;" />
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+      {% if error %}
+        <div class="alert alert-danger mt-3">{{ error }}</div>
+      {% endif %}
+    </form>
+  </div>
+
+  <script>
+    function previewImage(event) {
+      const input = event.target;
+      const preview = document.getElementById('preview');
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
+  
+  {% if error %}
+    <p style="color: red">{{ error }}</p>
+  {% endif %}
+{% endblock %}

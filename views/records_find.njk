@@ -1,0 +1,33 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Buscar Expedientes por Apellido del Paciente{% endblock %}
+
+{% block contenido %}
+
+<h2>Buscar expedientes médicos por apellido del paciente</h2>
+
+<form action="/records/find" method="get">
+  <div class="form-group">
+    <label for="surname">Apellido:</label>
+    <input type="text" name="surname" class="form-control" placeholder="Ej: Pérez" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+
+{% if error %}
+  <div class="alert alert-danger mt-3">{{ error }}</div>
+{% endif %}
+
+{% if records %}
+  <h3>Resultados:</h3>
+  <ul class="list-group">
+    {% for record in records %}
+      <li class="list-group-item">
+        {{ record.patient.name }} {{ record.patient.surname }} - 
+        <a href="/records/{{ record._id }}">Ver expediente</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% endblock %}

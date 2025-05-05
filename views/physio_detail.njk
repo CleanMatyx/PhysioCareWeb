@@ -1,0 +1,18 @@
+{% extends "base.njk" %}
+
+{% block titulo %}{{ physio.name }} | Ficha{% endblock %}
+
+{% block contenido %}
+
+    <h1>Ficha de {{ physio.name }}</h1>
+    <div>
+        <p><strong>Nombre:</strong> {{ physio.name }}</p>
+        <p><strong>Apellidos:</strong> {{ physio.surname }}</p>
+        <p><strong>Especialidad:</strong> {{ physio.specialty }}</p>
+        <p><strong>Numero de licencia:</strong> {{physio.licenseNumber}}</p>
+    </div>
+
+    <a class="btn btn-primary" href="/physios/{{ physio._id }}/edit">Editar fisioterapeuta</a>
+
+
+{% endblock %}

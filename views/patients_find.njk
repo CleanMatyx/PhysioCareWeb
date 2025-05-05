@@ -1,0 +1,64 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Buscar Pacientes{% endblock %}
+
+{% block contenido %}
+
+  <h1>Buscar pacientes por apellido</h1>
+
+  <form class="form-inline mb-3" action="/patients/find" method="get">
+      <div class="form-group mb-2" style="max-width: 600px; width: 100%;">
+          <input type="text" name="surname" class="form-control" placeholder="Buscar por apellido..." required>
+      </div>
+      <button type="submit" class="btn btn-outline-primary mb-2 ml-2">Buscar</button>
+  </form>
+
+  {% if error %}
+    <div class="alert alert-danger mt-3">{{ error }}</div>
+  {% endif %}
+
+  {% if patients_filtered %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Número de seguro</th>
+            <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for patient in patients_filtered %}
+            <tr>
+                <td>{{ patient.name }}</td>
+                <td>{{ patient.surname }}</td>
+                <td>{{ patient.insuranceNumber }}</td>
+                {% if session.usuario.rol == 'admin' %}
+                    <td>
+                        <div class="d-flex align-items-center gap-1">
+                            <a class="btn btn-success btn-sm" href="/patients/{{ patient.id }}">Ficha</a>
+                            <form action="/patients/{{ patient.id }}" method="post" class="m-0 p-0">
+                                <input type="hidden" name="_method" value="delete" />
+                                <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
+                            </form>
+                            <a class="btn btn-primary btn-sm" href="/patients/{{ patient.id }}/edit">Editar</a>
+                        </div>
+                    </td>
+                {% else %}
+                    <td>
+                        <div class="d-flex align-items-center gap-1">
+                            <a class="btn btn-success btn-sm" href="/patients/{{ patient.id }}">Ficha</a>
+                        </div>
+                    </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No hay pacientes para mostrar.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  {% endif %}
+
+{% endblock %}

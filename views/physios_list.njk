@@ -1,0 +1,60 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Fisioterapeutas | Listado{% endblock %}
+
+{% block contenido %}
+
+<h1>Listado de Fisioterapeutas</h1>
+<br>
+
+<!-- Formulario de búsqueda por especialidad -->
+<form class="mb-3" action="/physios/find" method="get">
+  <div class="form-inline">
+    <select name="specialty" class="form-control mr-2">
+      <option value="">Seleccione especialidad</option>
+      <option value="Sports">Deportes</option>
+      <option value="Neurological">Neurologica</option>
+      <option value="Pediatric">Pediátrica</option>
+      <option value="Geriatric">Geriátrica</option>
+      <option value="Oncological">Oncologica</option>
+    </select>
+    <button type="submit" class="btn btn-outline-primary btn-sm">Buscar</button>
+  </div>
+</form>
+<br>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Especialidad</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for physio in physios %}
+      <tr>
+        <td>{{ physio.name }}</td>
+        <td>{{ physio.surname }}</td>
+        <td>{{ physio.specialty }}</td>
+        <td>
+          <div class="d-flex align-items-center gap-1">
+            <a class="btn btn-success btn-sm" href="/physios/{{ physio.id }}">Ficha</a>
+            {% if session.usuario.rol == 'admin' %}
+              <form action="/physios/{{ physio.id }}" method="post" class="m-0 p-0">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
+              </form>
+              <a class="btn btn-primary btn-sm" href="/physios/{{ physio.id }}/edit">Editar</a>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4">No hay fisioterapeutas para mostrar.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Menú</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+      {% if session.usuario %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownPacientes" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Pacientes
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownPacientes">
+            <li><a class="dropdown-item" href="/patients">Listado</a></li>
+            {% if session.usuario.rol == 'admin' or session.usuario.rol == 'physio' %}
+              <li><a class="dropdown-item" href="/patients/new">Registrar Paciente</a></li>
+            {% endif %}
+            <li><a class="dropdown-item" href="/patients/find">Buscar Paciente</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownFisios" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Fisioterapeutas
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownFisios">
+            <li><a class="dropdown-item" href="/physios">Listado</a></li>
+            {% if session.usuario.rol == 'admin' %}
+              <li><a class="dropdown-item" href="/physios/new">Registrar Fisio</a></li>
+            {% endif %}
+            <li><a class="dropdown-item" href="/physios/find">Buscar Fisio</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownExpedientes" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Expedientes Médicos
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownExpedientes">
+            <li><a class="dropdown-item" href="/records">Listado</a></li>
+            {% if session.usuario.rol == 'admin' or session.usuario.rol == 'physio' %}
+              <li><a class="dropdown-item" href="/records/new">Nuevo Expediente</a></li>
+            {% endif %}
+            <li><a class="dropdown-item" href="/records/find">Buscar Expediente</a></li>
+          </ul>
+        </li>
+
+      {% endif %}
+    </ul>
+
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        {% if session.usuario %}
+          <a class="nav-link" href="/auth/logout">Logout</a>
+        {% else %}
+          <a class="nav-link" href="/auth/login">Login</a>
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+</nav>

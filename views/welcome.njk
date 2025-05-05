@@ -1,0 +1,15 @@
+{% extends "base.njk" %}
+
+{% block titulo %}Bienvenido{% endblock %}
+
+{% block contenido %}
+<div class="text-center mt-5">
+  <h1 class="display-4">¡Bienvenido a la Clínica de Fisioterapia!</h1>
+  <p class="lead mt-3">Gestione pacientes, profesionales y expedientes médicos desde un único lugar.</p>
+  <hr class="my-4">
+
+  <a href="/api/physioweb/auth/login" class="btn btn-primary btn-lg mt-3">
+    Iniciar sesión
+  </a>
+</div>
+{% endblock %}
