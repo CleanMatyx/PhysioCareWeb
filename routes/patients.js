@@ -1,6 +1,7 @@
 const express = require('express');
 const auth = require('../auth/auth');
 const Patient = require('../models/patient');
+const Record = require('../models/record'); // Importar el modelo Record
 
 const router = express.Router();
 
@@ -84,9 +85,17 @@ router.get('/:id', auth.protegerRuta, async (req, res) => {
     if (!patient) {
       return sendError(res, 404, "No se encontraron pacientes con el 'id' introducido en la base de datos.");
     }
-    return sendResponse(res, 200, { ok: true, result: patient });
+
+    // Buscar registros médicos y citas del paciente
+    const records = await Record.find({ patient: req.params.id })
+      .populate('appointments.physio', 'name surname');
+
+    return sendResponse(res, 200, { 
+      ok: true, 
+      result: { patient, records } 
+    });
   } catch (error) {
-    console.error("Error al obtener el paciente:", error);
+    console.error("Error al obtener el paciente y sus registros:", error);
     return sendError(res, 500, "Error interno del servidor.");
   }
 });

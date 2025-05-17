@@ -105,60 +105,139 @@ async function loadData() {
       const records = [
           new Record({
               patient: savedPatients[0]._id,
-              medicalRecord: 'Paciente con antecedentes de lesiones en rodilla y cadera.',
+              medicalRecord: 'Paciente con antecedentes de lesiones en rodilla y cadera. Historial de múltiples intervenciones quirúrgicas en la rodilla izquierda y sesiones de fisioterapia prolongadas. Actualmente presenta molestias ocasionales al caminar largas distancias.',
               appointments: [
                   {
-                      date: new Date('2024-02-10'),
-                      physio: savedPhysios[0]._id, // Sports specialty physio
+                      id: new mongoose.Types.ObjectId(),
+                      appointmentId: new mongoose.Types.ObjectId(),
+                      date: new Date('2023-12-10T10:00:00Z'),
+                      physio: savedPhysios[0]._id,
                       diagnosis: 'Distensión de ligamentos de la rodilla',
                       treatment: 'Rehabilitación con ejercicios de fortalecimiento',
-                      observations: 'Se recomienda evitar actividad intensa por 6 semanas'
+                      observations: 'Se recomienda evitar actividad intensa por 6 semanas',
+                      price: 150
                   },
                   {
-                      date: new Date('2024-03-01'),
+                      id: new mongoose.Types.ObjectId(),
+                      appointmentId: new mongoose.Types.ObjectId(),
+                      date: new Date('2024-01-15T14:00:00Z'),
                       physio: savedPhysios[0]._id,
                       diagnosis: 'Mejoría notable, sin dolor agudo',
                       treatment: 'Continuar con ejercicios, añadir movilidad funcional',
-                      observations: 'Próxima revisión en un mes'
+                      observations: 'Próxima revisión en un mes',
+                      price: 120
+                  },
+                  {
+                      id: new mongoose.Types.ObjectId(),
+                      appointmentId: new mongoose.Types.ObjectId(),
+                      date: new Date('2025-06-01T09:00:00Z'),
+                      physio: savedPhysios[0]._id,
+                      diagnosis: 'Pendiente de evaluación',
+                      treatment: 'Pendiente de evaluación',
+                      observations: 'Pendiente de evaluación',
+                      price: 100
+                  },
+                  {
+                      id: new mongoose.Types.ObjectId(),
+                      appointmentId: new mongoose.Types.ObjectId(),
+                      date: new Date('2025-07-15T11:30:00Z'),
+                      physio: savedPhysios[0]._id,
+                      diagnosis: 'Pendiente de evaluación',
+                      treatment: 'Pendiente de evaluación',
+                      observations: 'Pendiente de evaluación',
+                      price: 80
                   }
               ]
           }),
           new Record({
               patient: savedPatients[1]._id,
-              medicalRecord: 'Paciente con problemas neuromusculares.',
+              medicalRecord: 'Paciente con problemas neuromusculares desde la infancia. Ha recibido múltiples tratamientos para mejorar la movilidad y reducir la rigidez muscular. Actualmente en seguimiento para evaluar progresos.',
               appointments: [
                   {
-                      date: new Date('2024-02-15'),
-                      physio: savedPhysios[1]._id, // Neurological specialty physio
-                      diagnosis: 'Debilidad muscular en miembros inferiores',
-                      treatment: 'Terapia neuromuscular y estiramientos',
-                      observations: 'Revisar la evolución en 3 semanas'
+                    id: new mongoose.Types.ObjectId(),
+                    appointmentId: new mongoose.Types.ObjectId(),
+                    date: new Date('2023-11-20T09:30:00Z'),
+                    physio: savedPhysios[1]._id,
+                    diagnosis: 'Debilidad muscular en miembros inferiores',
+                    treatment: 'Terapia neuromuscular y estiramientos',
+                    observations: 'Revisar la evolución en 3 semanas',
+                    price: 90
+                  },
+                  {
+                    id: new mongoose.Types.ObjectId(),
+                    appointmentId: new mongoose.Types.ObjectId(),
+                    date: new Date('2024-02-15T10:00:00Z'),
+                    physio: savedPhysios[1]._id,
+                    diagnosis: 'Mejoría en la fuerza muscular, pero persiste rigidez',
+                    treatment: 'Añadir ejercicios de resistencia y movilidad',
+                    observations: 'Próxima revisión en 6 semanas',
+                    price: 110
+                  },
+                  {
+                    id: new mongoose.Types.ObjectId(),
+                    appointmentId: new mongoose.Types.ObjectId(),
+                    date: new Date('2025-05-20T15:00:00Z'),
+                    physio: savedPhysios[1]._id,
+                    diagnosis: 'Pendiente de evaluación',
+                    treatment: 'Pendiente de evaluación',
+                    observations: 'Pendiente de evaluación',
+                    price: 130
+                  },
+                  {
+                    id: new mongoose.Types.ObjectId(),
+                    appointmentId: new mongoose.Types.ObjectId(),
+                    date: new Date('2025-06-25T10:30:00Z'),
+                    physio: savedPhysios[1]._id,
+                    diagnosis: 'Pendiente de evaluación',
+                    treatment: 'Pendiente de evaluación',
+                    observations: 'Pendiente de evaluación',
+                    price: 140
                   }
               ]
           }),
           new Record({
               patient: savedPatients[2]._id,
-              medicalRecord: 'Lesión de hombro recurrente, movilidad limitada.',
+              medicalRecord: 'Lesión de hombro recurrente con movilidad limitada. Historial de tendinitis crónica en el manguito rotador. Tratamientos previos han mostrado mejorías temporales.',
               appointments: [
                   {
-                      date: new Date('2024-01-25'),
-                      physio: savedPhysios[2]._id, // Pediatric specialty physio
+                      id: new mongoose.Types.ObjectId(),
+                      appointmentId: new mongoose.Types.ObjectId(),
+                      date: new Date('2023-10-05T08:00:00Z'),
+                      physio: savedPhysios[2]._id,
                       diagnosis: 'Tendinitis en el manguito rotador',
                       treatment: 'Ejercicios de movilidad y fortalecimiento',
-                      observations: 'Revisar en 4 semanas'
-                  }
-              ]
-          }),
-          new Record({
-              patient: savedPatients[3]._id,
-              medicalRecord: 'Paciente con problemas oncológicos.',
-              appointments: [
+                      observations: 'Revisar en 4 semanas',
+                      price: 70
+                  },
                   {
-                      date: new Date('2024-01-15'),
-                      physio: savedPhysios[4]._id, // Oncology specialty physio
-                      diagnosis: 'Fatiga post-tratamiento oncológico',
-                      treatment: 'Ejercicios suaves y terapia de relajación',
-                      observations: 'Revisión en 2 semanas'
+                      id: new mongoose.Types.ObjectId(),
+                      appointmentId: new mongoose.Types.ObjectId(),
+                      date: new Date('2024-01-25T09:00:00Z'),
+                      physio: savedPhysios[2]._id,
+                      diagnosis: 'Mejoría en la movilidad, pero persiste dolor leve',
+                      treatment: 'Continuar con ejercicios y añadir terapia manual',
+                      observations: 'Próxima revisión en 2 meses',
+                      price: 60
+                  },
+                  {
+                      id: new mongoose.Types.ObjectId(),
+                      appointmentId: new mongoose.Types.ObjectId(),
+                      date: new Date('2025-06-10T14:00:00Z'),
+                      physio: savedPhysios[2]._id,
+                      diagnosis: 'Pendiente de evaluación',
+                      treatment: 'Pendiente de evaluación',
+                      observations: 'Pendiente de evaluación',
+                      price: 50
+                  },
+                  {
+                      id: new mongoose.Types.ObjectId(),
+                      appointmentId: new mongoose.Types.ObjectId(),
+                      date: new Date('2025-07-20T16:00:00Z'),
+                      physio: savedPhysios[2]._id,
+                      diagnosis: 'Pendiente de evaluación',
+                      treatment: 'Pendiente de evaluación',
+                      observations: 'Pendiente de evaluación',
+                      price: 40
                   }
               ]
           })

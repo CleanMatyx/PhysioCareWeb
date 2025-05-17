@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: Mi API de Physio
+  version: 1.0.0
+  description: Endpoints para gestión de sesiones de fisioterapia
+servers:
+  - url: https://matiasborra.es/api/physio
+paths:
+  /auth/login:
+    post:
+      summary: Login de usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+              required:
+                - login
+                - password
+      responses:
+        '200':
+          description: Token generado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  token:
+                    type: string

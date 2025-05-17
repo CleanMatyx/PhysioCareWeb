@@ -49,13 +49,20 @@ router.post('/login', async (req, res) => {
       });
     }
 
+    console.log("Usuario encontrado:", usuario[0]);
+    console.log("Id de usuario:", usuario[0].userId);
+    console.log("Rol de usuario:", usuario[0].rol);
+
     const match = await bcrypt.compare(password, usuario[0].password);
 
     if (match) {
-      const token = generarToken(usuario[0]._id, usuario[0].login, usuario[0].rol);
+      const token = generarToken(usuario[0].userId, usuario[0].login, usuario[0].rol);
       return res.status(200).send({
         ok: true,
-        token: token
+        token: token,
+        userId: usuario[0].userId,
+        login: usuario[0].login,
+        rol: usuario[0].rol
       });
     } else {
       return res.status(401).send({

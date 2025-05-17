@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['admin', 'physio', 'patient'],
         required: true
+    },
+    userId: {
+        type: String,
+        required: true,
     }
 });
 

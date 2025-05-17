@@ -13,6 +13,11 @@ const physioRouter = require('./routes/physios');
 const recordRouter = require('./routes/records');
 const auth = require('./routes/auth');
 
+// swagger
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const spec = YAML.load('./openapi.yaml');
+
 const BASE_PATH = '/api/physioWeb';
 // app.use(BASE_PATH, (req, res, next) => {
 //     next();
@@ -107,6 +112,7 @@ app.use('/patients', patientRouter);
 app.use('/physios', physioRouter);
 app.use('/records', recordRouter);
 app.use('/auth', auth);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(spec));
 
 // Ruta para redirigir a la página principal
 app.get('/', (req, res) => {

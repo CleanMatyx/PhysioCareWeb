@@ -12,6 +12,11 @@ const recordSchema = new mongoose.Schema({
         maxlength: 1000
     },
     appointments: [{
+        appointmentId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Appointment',
+            required: true
+        },
         date: {
             type: Date,
             required: true
@@ -35,7 +40,12 @@ const recordSchema = new mongoose.Schema({
             type: String,
             required: false,
             maxlength: 500
+        },
+        price: {
+            type: Number,
+            required: true
         }
+
     }]
 });
 
