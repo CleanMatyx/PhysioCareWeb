@@ -4,6 +4,7 @@
 <!-- Navegación interna -->
 <nav style="background:#f9f9f9;padding:10px;border-radius:5px;margin-bottom:20px;">
   <ul style="list-style:none;padding:0;margin:0;display:flex;gap:15px;">
+    <li><a href="#uso-aplicacion">Uso de la Aplicación</a></li>
     <li><a href="#autenticacion">Login</a></li>
     <li><a href="#pacientes">Pacientes</a></li>
     <li><a href="#fisioterapeutas">Fisioterapeutas</a></li>
@@ -12,6 +13,37 @@
     <li><a href="#endpoints-especiales">Endpoints Especiales</a></li>
   </ul>
 </nav>
+
+<hr>
+<h2 id="uso-aplicacion">Uso de la Aplicación</h2>
+
+<h3>Requisitos Previos</h3>
+<ul>
+  <li>Node.js ≥ 14.x y npm.</li>
+  <li>MongoDB en ejecución (local o nube).</li>
+  <li>Postman para probar la API.</li>
+</ul>
+
+<h3>Instalación</h3>
+<pre><code># Clonar el repositorio
+git clone https://github.com/tu-usuario/physiocare-backend.git
+cd physiocare-backend</code></pre>
+
+<h3>Instalar dependencias del backend</h3>
+<pre><code>npm install</code></pre>
+
+<h3>Configuración</h3>
+<p>Crear archivo <code>.env</code> en la raíz de <code>physiocare-backend</code> con:</p>
+<pre><code>MONGODB_URI=mongodb://localhost:27017/physiocare
+JWT_SECRET=tu_secreto_seguro
+PORT=3000
+</code></pre>
+
+<h3>Ejecutar la Aplicación</h3>
+<strong>Backend:</strong>
+    <pre><code>cd physiocare-backend
+npm start</code></pre>
+    <p>Por defecto en <code>http://localhost:3000</code>.</p>
 
 <hr>
 
