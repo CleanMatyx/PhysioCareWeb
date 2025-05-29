@@ -159,7 +159,7 @@ npm start</code></pre>
   "surname": "Borra",
   "birthDate": "1994-06-09",
   "address": "Calle Falsa 123",
-  "insuranceNumber": "AB123456",
+  "insuranceNumber": "A12345678",
   "email": "matias@example.com"
 }</code></pre>
 <ul>
